@@ -225,6 +225,18 @@ class Commit(github.GithubObject.CompletableGithubObject):
         )
         return github.CommitCombinedStatus.CommitCombinedStatus(self._requester, headers, data, completed=True)
 
+    def get_pull_requests(self):
+        """
+        :calls: `GET /repos/:owner/:repo/commits/:commit_sha/pulls`
+        :rtype:
+        """
+        return github.PaginatedList.PaginatedList(
+            github.PullRequest.PullRequest,
+            self._requester,
+            self.url + "/pulls",
+            None
+        )
+
     @property
     def _identity(self):
         return self.sha
